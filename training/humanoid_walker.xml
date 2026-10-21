@@ -1,0 +1,220 @@
+<?xml version="1.0"?>
+<mujoco model="humanoid_24dof">
+  <compiler angle="radian" autolimits="true" coordinate="local"/>
+  <option timestep="0.005" iterations="50" tolerance="1e-10"
+          impratio="1" noslip_iterations="5"/>
+  <size nconmax="200" njmax="2000" nuserdata="3"/>
+
+  <default>
+    <joint damping="0.1" armature="0.01" limited="true"/>
+    <geom friction="1.0 0.05 0.01" solimp="0.9 0.95 0.001" solref="0.02 1" condim="6"/>
+    <motor ctrlrange="-1 1" ctrllimited="true"/>
+    <position kp="100" kv="10"/>
+  </default>
+
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" rgb1="0.2 0.2 0.2" rgb2="0.3 0.3 0.3"
+             width="300" height="300"/>
+    <material name="ground" texture="grid" texrepeat="5 5"/>
+    <material name="body" rgba="0.88 0.88 0.90 1"/>
+    <material name="joint" rgba="0.12 0.12 0.15 1"/>
+    <material name="joint_detail" rgba="0.25 0.25 0.28 1"/>
+  </asset>
+
+  <worldbody>
+    <light name="top" pos="0 0 5" dir="0 0 -1"/>
+    <geom name="ground" type="plane" size="20 20 0.1" material="ground"/>
+
+    <!-- ===== PELVIS (compact black hip) ===== -->
+      <body name="pelvis" pos="0 0 0.85">
+      <freejoint/>
+      <geom type="box" size="0.06 0.05 0.035" mass="3" material="joint"/>
+      <geom type="cylinder" size="0.04 0.015" pos="0 0 -0.03" mass="0.5" material="joint_detail"/>
+
+      <!-- ===== LEFT LEG ===== -->
+      <body name="l_thigh" pos="-0.07 0 -0.04">
+        <joint name="l_hip_pitch" type="hinge" axis="1 0 0" range="-0.5 1.0" limited="true"/>
+        <geom type="sphere" size="0.028" mass="0.2" material="joint"/>
+        <geom type="capsule" fromto="0 0 0 0 0 -0.42" size="0.048" mass="4.5" material="body"/>
+
+        <body name="l_thigh_roll" pos="0 0 -0.42">
+          <joint name="l_hip_roll" type="hinge" axis="0 1 0" range="-0.3 0.5" limited="true"/>
+          <geom type="sphere" size="0.035" mass="0.3" material="joint"/>
+          <geom type="cylinder" size="0.04 0.012" mass="0.1" material="joint_detail"/>
+
+          <body name="l_thigh_yaw" pos="0 0 0.03">
+            <joint name="l_hip_yaw" type="hinge" axis="0 0 1" range="-0.5 0.5" limited="true"/>
+            <geom type="cylinder" size="0.025 0.012" mass="0.15" material="joint_detail"/>
+
+            <body name="l_shin" pos="0 0 0.03">
+              <joint name="l_knee" type="hinge" axis="1 0 0" range="0.0 1.5" limited="true"/>
+              <geom type="capsule" fromto="0 0 0 0 0.025 -0.42" size="0.042" mass="2.8" material="body"/>
+
+              <body name="l_foot" pos="0 0.025 -0.42">
+                <joint name="l_ankle" type="hinge" axis="1 0 0" range="-0.5 0.5" limited="true"/>
+                <geom type="sphere" size="0.025" mass="0.1" material="joint"/>
+                <geom type="box" size="0.04 0.08 0.015" pos="0 0.015 -0.015" mass="0.8" material="joint"/>
+                <geom type="box" size="0.035 0.015 0.012" pos="0 0.09 -0.008" mass="0.08" material="joint_detail"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+
+      <!-- ===== RIGHT LEG ===== -->
+      <body name="r_thigh" pos="0.07 0 -0.04">
+        <joint name="r_hip_pitch" type="hinge" axis="1 0 0" range="-0.5 1.0" limited="true"/>
+        <geom type="sphere" size="0.028" mass="0.2" material="joint"/>
+        <geom type="capsule" fromto="0 0 0 0 0 -0.42" size="0.048" mass="4.5" material="body"/>
+
+        <body name="r_thigh_roll" pos="0 0 -0.42">
+          <joint name="r_hip_roll" type="hinge" axis="0 1 0" range="-0.5 0.3" limited="true"/>
+          <geom type="sphere" size="0.035" mass="0.3" material="joint"/>
+          <geom type="cylinder" size="0.04 0.012" mass="0.1" material="joint_detail"/>
+
+          <body name="r_thigh_yaw" pos="0 0 0.03">
+            <joint name="r_hip_yaw" type="hinge" axis="0 0 1" range="-0.5 0.5" limited="true"/>
+            <geom type="cylinder" size="0.025 0.012" mass="0.15" material="joint_detail"/>
+
+            <body name="r_shin" pos="0 0 0.03">
+              <joint name="r_knee" type="hinge" axis="1 0 0" range="0.0 1.5" limited="true"/>
+              <geom type="capsule" fromto="0 0 0 0 0.025 -0.42" size="0.042" mass="2.8" material="body"/>
+
+              <body name="r_foot" pos="0 0.025 -0.42">
+                <joint name="r_ankle" type="hinge" axis="1 0 0" range="-0.5 0.5" limited="true"/>
+                <geom type="sphere" size="0.025" mass="0.1" material="joint"/>
+                <geom type="box" size="0.04 0.08 0.015" pos="0 0.015 -0.015" mass="0.8" material="joint"/>
+                <geom type="box" size="0.035 0.015 0.012" pos="0 0.09 -0.008" mass="0.08" material="joint_detail"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+
+      <!-- ===== TORSO ===== -->
+      <body name="torso" pos="0 0 0.05">
+        <geom type="box" size="0.08 0.06 0.14" mass="5" material="body"/>
+
+        <body name="twist_link" pos="0 0 0.16">
+          <joint name="torso_twist" type="hinge" axis="0 0 1" range="-0.5 0.5" limited="true"/>
+          <geom type="cylinder" size="0.04 0.012" mass="0.2" material="joint"/>
+
+          <geom type="box" size="0.10 0.065 0.18" pos="0 0 0.18" mass="4" material="body"/>
+          <geom type="box" size="0.06 0.008 0.05" pos="0 0.07 0.20" mass="0.15" material="joint_detail"/>
+
+          <body name="l_upperarm" pos="-0.12 0 0.22">
+            <joint name="l_shoulder_pitch" type="hinge" axis="1 0 0" range="-1.5 1.5" limited="true"/>
+            <geom type="sphere" size="0.032" mass="0.4" material="joint"/>
+            <geom type="capsule" size="0.03 0.14" mass="2.2" material="body"/>
+
+            <body name="l_upperarm_roll" pos="0 0 -0.28">
+              <joint name="l_shoulder_roll" type="hinge" axis="0 1 0" range="-0.8 0.8" limited="true"/>
+              <geom type="cylinder" size="0.022 0.008" mass="0.08" material="joint_detail"/>
+
+              <body name="l_upperarm_yaw" pos="0 0 0.03">
+                <joint name="l_shoulder_yaw" type="hinge" axis="0 0 1" range="-1.0 1.0" limited="true"/>
+                <geom type="cylinder" size="0.022 0.008" mass="0.08" material="joint_detail"/>
+
+                <body name="l_forearm" pos="0 0 0.03">
+                  <joint name="l_elbow" type="hinge" axis="1 0 0" range="0.0 1.5" limited="true"/>
+                  <geom type="sphere" size="0.028" mass="0.15" material="joint"/>
+                  <geom type="capsule" size="0.025 0.12" mass="1.5" material="body"/>
+
+                  <body name="l_hand" pos="0 0 -0.13">
+                    <geom type="sphere" size="0.02" mass="0.08" material="joint"/>
+                    <geom type="box" size="0.018 0.012 0.04" mass="0.2" material="joint"/>
+                    <!-- 4 fingers -->
+                    <geom type="box" size="0.006 0.006 0.03" pos="-0.014 0 -0.055" mass="0.03" material="joint"/>
+                    <geom type="box" size="0.006 0.006 0.03" pos="-0.005 0 -0.055" mass="0.03" material="joint"/>
+                    <geom type="box" size="0.006 0.006 0.03" pos="0.005 0 -0.055" mass="0.03" material="joint"/>
+                    <geom type="box" size="0.006 0.006 0.03" pos="0.014 0 -0.055" mass="0.03" material="joint"/>
+                    <!-- Thumb -->
+                    <geom type="box" size="0.006 0.006 0.025" pos="-0.022 -0.008 -0.035" mass="0.02" material="joint"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+
+          <!-- ===== RIGHT ARM ===== -->
+          <body name="r_upperarm" pos="0.12 0 0.22">
+            <joint name="r_shoulder_pitch" type="hinge" axis="1 0 0" range="-1.5 1.5" limited="true"/>
+            <geom type="sphere" size="0.032" mass="0.4" material="joint"/>
+            <geom type="capsule" size="0.03 0.14" mass="2.2" material="body"/>
+
+            <body name="r_upperarm_roll" pos="0 0 -0.28">
+              <joint name="r_shoulder_roll" type="hinge" axis="0 1 0" range="-0.8 0.8" limited="true"/>
+              <geom type="cylinder" size="0.022 0.008" mass="0.08" material="joint_detail"/>
+
+              <body name="r_upperarm_yaw" pos="0 0 0.03">
+                <joint name="r_shoulder_yaw" type="hinge" axis="0 0 1" range="-1.0 1.0" limited="true"/>
+                <geom type="cylinder" size="0.022 0.008" mass="0.08" material="joint_detail"/>
+
+                <body name="r_forearm" pos="0 0 0.03">
+                  <joint name="r_elbow" type="hinge" axis="1 0 0" range="0.0 1.5" limited="true"/>
+                  <geom type="sphere" size="0.028" mass="0.15" material="joint"/>
+                  <geom type="capsule" size="0.025 0.12" mass="1.5" material="body"/>
+
+                  <body name="r_hand" pos="0 0 -0.13">
+                    <geom type="sphere" size="0.02" mass="0.08" material="joint"/>
+                    <geom type="box" size="0.018 0.012 0.04" mass="0.2" material="joint"/>
+                    <geom type="box" size="0.006 0.006 0.03" pos="-0.014 0 -0.055" mass="0.03" material="joint"/>
+                    <geom type="box" size="0.006 0.006 0.03" pos="-0.005 0 -0.055" mass="0.03" material="joint"/>
+                    <geom type="box" size="0.006 0.006 0.03" pos="0.005 0 -0.055" mass="0.03" material="joint"/>
+                    <geom type="box" size="0.006 0.006 0.03" pos="0.014 0 -0.055" mass="0.03" material="joint"/>
+                    <geom type="box" size="0.006 0.006 0.025" pos="0.022 -0.008 -0.035" mass="0.02" material="joint"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+
+          <!-- ===== NECK ===== -->
+          <body name="neck" pos="0 0 0.36">
+            <joint name="neck_pitch" type="hinge" axis="0 1 0" range="-0.5 0.5" limited="true"/>
+            <geom type="cylinder" size="0.02 0.035" mass="0.4" material="joint"/>
+
+            <body name="head" pos="0 0 0.12">
+              <joint name="neck_yaw" type="hinge" axis="0 0 1" range="-0.8 0.8" limited="true"/>
+              <geom type="ellipsoid" size="0.055 0.05 0.075" mass="2" material="joint"/>
+              <geom type="box" size="0.04 0.004 0.015" pos="0 0.052 0.008" mass="0.08" rgba="0.3 0.5 0.8 1"/>
+            </body>
+          </body>
+
+          <body name="chest" pos="0 0 0.16">
+            <joint name="torso_bend" type="hinge" axis="0 1 0" range="-0.4 0.6" limited="true"/>
+            <geom type="box" size="0.01 0.01 0.01" mass="0.01" rgba="0 0 0 0"/>
+          </body>
+
+        </body>
+      </body>
+
+    </body>
+  </worldbody>
+
+  <actuator>
+    <position joint="l_hip_yaw" name="l_hip_yaw" kp="120" kv="10"/>
+    <position joint="l_hip_roll" name="l_hip_roll" kp="120" kv="10"/>
+    <position joint="l_hip_pitch" name="l_hip_pitch" kp="120" kv="10"/>
+    <position joint="l_knee" name="l_knee" kp="120" kv="10"/>
+    <position joint="l_ankle" name="l_ankle" kp="100" kv="10"/>
+    <position joint="r_hip_yaw" name="r_hip_yaw" kp="120" kv="10"/>
+    <position joint="r_hip_roll" name="r_hip_roll" kp="120" kv="10"/>
+    <position joint="r_hip_pitch" name="r_hip_pitch" kp="120" kv="10"/>
+    <position joint="r_knee" name="r_knee" kp="120" kv="10"/>
+    <position joint="r_ankle" name="r_ankle" kp="100" kv="10"/>
+    <position joint="l_shoulder_pitch" name="l_shoulder_pitch" kp="40" kv="5"/>
+    <position joint="l_shoulder_roll" name="l_shoulder_roll" kp="40" kv="5"/>
+    <position joint="l_shoulder_yaw" name="l_shoulder_yaw" kp="20" kv="5"/>
+    <position joint="l_elbow" name="l_elbow" kp="20" kv="5"/>
+    <position joint="r_shoulder_pitch" name="r_shoulder_pitch" kp="40" kv="5"/>
+    <position joint="r_shoulder_roll" name="r_shoulder_roll" kp="40" kv="5"/>
+    <position joint="r_shoulder_yaw" name="r_shoulder_yaw" kp="20" kv="5"/>
+    <position joint="r_elbow" name="r_elbow" kp="20" kv="5"/>
+    <position joint="neck_pitch" name="neck_pitch" kp="10" kv="3"/>
+    <position joint="neck_yaw" name="neck_yaw" kp="10" kv="3"/>
+    <position joint="torso_twist" name="torso_twist" kp="60" kv="8"/>
+    <position joint="torso_bend" name="torso_bend" kp="80" kv="8"/>
+  </actuator>
+
+</mujoco>

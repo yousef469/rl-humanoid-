@@ -1,0 +1,24 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+*.log
+MUJOCO_LOG.TXT
+
+# Local environments
+.venv/
+venv/
+rl_env/
+
+# Generated simulation assets
+backend/humanoid.urdf
+
+# Training artifacts
+training/checkpoints/
+training/policy/
+training/trained_model/
+training/robot_training_data.jsonl
+training/red_ball_dataset/
+training/red_ball_runs/
+training/*.onnx
+training/logs/
+training/test_logs/

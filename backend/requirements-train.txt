@@ -1,0 +1,4 @@
+-r requirements.txt
+transformers>=4.41.0
+onnxruntime>=1.16.0
+polars>=1.0.0

@@ -1,0 +1,10 @@
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+httpx>=0.25.0
+websockets>=12.0
+numpy>=1.24.0
+scipy>=1.10.0
+osqp>=0.6.3
+pybullet>=3.25
+pillow>=9.0.0
+ultralytics>=8.0.0

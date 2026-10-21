@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Robot Simulation</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div id="app">
+    <div id="sidebar">
+      <div class="panel" id="status-panel">
+        <div class="panel-title">Robot Status</div>
+        <div class="stat-row"><span class="label">Position</span><span id="stat-pos" class="value">—</span></div>
+        <div class="stat-row"><span class="label">Facing</span><span id="stat-facing" class="value">—</span></div>
+        <div class="stat-row"><span class="label">Speed</span><span id="stat-speed" class="value">—</span></div>
+        <div class="stat-row"><span class="label">Objects</span><span id="stat-objects" class="value">0</span></div>
+        <div class="stat-row"><span class="label">State</span><span id="stat-state" class="value">idle</span></div>
+        <div class="stat-row"><span class="label">Red Ball</span><span id="stat-ball" class="value">—</span></div>
+      </div>
+      <div class="panel" id="contact-panel">
+        <div class="panel-title">Foot Contact</div>
+        <div class="contact-row">
+          <span class="contact-label">Left</span>
+          <span id="contact-left" class="contact-dot off"></span>
+          <span class="contact-label">Right</span>
+          <span id="contact-right" class="contact-dot off"></span>
+        </div>
+      </div>
+      <div class="panel" id="obstacle-panel" style="display:none">
+        <div class="panel-title" style="color:#ff6644">⚠ Obstacle</div>
+        <div id="obstacle-text" class="value" style="color:#ff6644">Object detected — avoiding</div>
+      </div>
+    </div>
+
+    <div id="viewport">
+      <div id="speech-bubble" style="display:none">
+        <span id="speech-text"></span>
+      </div>
+      <div id="camera-overlay">
+        <div id="camera-header">Robot Camera</div>
+        <canvas id="camera-canvas" width="320" height="240"></canvas>
+      </div>
+      <div id="connection-badge">Disconnected</div>
+    </div>
+
+    <div id="input-bar">
+      <input type="text" id="command-input" placeholder="Say something to the robot..." autofocus>
+      <button id="find-ball-btn">Find Red Ball</button>
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="/static/js/orbit-controls.js"></script>
+  <script src="/static/js/humanoid.js"></script>
+  <script src="/static/js/objects.js"></script>
+  <script src="/static/js/ui.js"></script>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
