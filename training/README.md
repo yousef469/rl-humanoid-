@@ -85,8 +85,12 @@ It prints parsed commands and latency for a few sample inputs.
 ball and robot through varied poses, uses the segmentation buffer to label the
 ball, and fine-tunes `models/yolo11n.pt`.
 
+Run this in an environment with the backend dependencies (PyBullet plus
+`ultralytics`):
+
 ```bash
 cd training
+python -m pip install -r ../backend/requirements.txt
 python train_red_ball_yolo.py
 ```
 
@@ -129,6 +133,7 @@ this policy. See the root `README.md` for that distinction.
 
 - Paths in the scripts are relative to their own file, so they can be run from
   anywhere.
-- `models/yolo11n.pt` is used by the G1 vision helpers; `models/yolov8n.pt` is
-  used by the web backend.
+- `models/yolo11n.pt` is the base checkpoint for red-ball fine-tuning and is
+  used by the G1 vision helpers. The web backend prefers the fine-tuned
+  `models/red_ball_yolo.pt` and falls back to `models/yolov8n.pt`.
 - Training logs/checkpoints are generated artifacts and are ignored by git.

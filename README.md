@@ -27,8 +27,9 @@ python main.py
 
 Open <http://localhost:8000>. The frontend is served by FastAPI.
 
-The repo also includes a local `rl_env/` virtualenv. If you use it, invoke pip
-through Python because its shebang points at an old path:
+A local `rl_env/` virtualenv may also exist on this machine; it is ignored by
+git. If you use it, invoke pip through Python because its shebang points at an
+old path:
 
 ```bash
 rl_env/bin/python -m pip install -r backend/requirements.txt
@@ -44,7 +45,8 @@ ollama pull qwen2.5:0.5b
 ```
 
 If Ollama is unavailable, the robot still renders and the websocket still
-streams state, but natural-language commands will not be executed.
+streams state. The direct red-ball request is intercepted without Ollama, but
+other natural-language commands will not be executed.
 
 ### Red-ball vision and seeking
 
@@ -109,14 +111,14 @@ backend/      FastAPI app, PyBullet world, controller, perception, reasoners
 frontend/     Three.js scene and websocket client
 models/       YOLO weights, including red_ball_yolo.pt
 training/     T5 command model, red-ball YOLO, and MuJoCo G1 PPO
-rl_env/       Local virtualenv (not part of the app)
+rl_env/       Optional local virtualenv (ignored by git)
 ```
 
 ## Verification
 
 ```bash
 python3 -m compileall -q backend training
-cd backend && ../rl_env/bin/python test_walk.py 1.0 30 1
+cd backend && ../.venv/bin/python test_walk.py 1.0 30 1
 for f in frontend/js/*.js; do node --check "$f"; done
 ```
 
@@ -127,7 +129,7 @@ Red-ball integration test (YOLO + controller, about 10 s of simulated time):
 
 ```bash
 cd backend
-../rl_env/bin/python - <<'PY'
+../.venv/bin/python - <<'PY'
 from physics_world import PhysicsWorld
 from perception import Perception
 from controller import Controller

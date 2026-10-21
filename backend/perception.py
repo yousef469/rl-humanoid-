@@ -1,7 +1,7 @@
 """Camera + object perception for the simulated robot.
 
 Vision uses two complementary sources:
-  * a cheap 360-degree-ish raycast for physics objects (always available)
+  * a cheap forward-facing raycast fan for physics objects (always available)
   * YOLO on the head camera for extra detections / the frontend overlay
 """
 
