@@ -15,6 +15,15 @@ models, and a separate MuJoCo training pipeline for a Unitree G1 policy.
 - **Training** (`training/`) contains command-model, red-ball YOLO, and MuJoCo
   G1 PPO pipelines. It is not loaded by the backend.
 
+## Before / after
+
+The early training setup used a simple 24-DOF block humanoid. The current
+training model is the Unitree G1 (29 DOF).
+
+| Before — 24-DOF block humanoid | After — Unitree G1 |
+| --- | --- |
+| ![Earlier 24-DOF block humanoid](docs/before-humanoid-24dof.jpeg) | ![Current Unitree G1 humanoid](docs/after-unitree-g1.jpeg) |
+
 ## Quick start
 
 ```bash
@@ -108,6 +117,7 @@ packages in `backend/requirements-train.txt`.
 
 ```text
 backend/      FastAPI app, PyBullet world, controller, perception, reasoners
+docs/         README screenshots
 frontend/     Three.js scene and websocket client
 models/       YOLO weights, including red_ball_yolo.pt
 training/     T5 command model, red-ball YOLO, and MuJoCo G1 PPO
